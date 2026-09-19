@@ -1,0 +1,6 @@
+{
+  "name": "PrivacyLens",
+  "description": "Turn complex privacy policies into clear, human-readable insights with AI.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

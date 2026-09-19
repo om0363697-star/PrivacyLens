@@ -1,0 +1,52 @@
+{
+  "$schema": "https://raw.githubusercontent.com/firebase/firebase-tools/master/schema/firestore-blueprint.json",
+  "entities": {
+    "users": {
+      "title": "Users",
+      "description": "User profiles for authenticated PrivacyLens users",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "email": { "type": "string" },
+        "avatarUrl": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "lastLoginAt": { "type": "string" }
+      },
+      "required": ["id", "email"]
+    },
+    "userPolicies": {
+      "title": "User Policies",
+      "description": "User saved privacy policy analyses",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "serviceName": { "type": "string" },
+        "companyName": { "type": "string" },
+        "serviceCategory": { "type": "string" },
+        "riskScore": { "type": "number" },
+        "riskLevel": { "type": "string" },
+        "readingTimeMinutesSaved": { "type": "number" },
+        "oneSentenceVerdict": { "type": "string" },
+        "analyzedAt": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "userId", "serviceName", "riskScore", "riskLevel"]
+    }
+  },
+  "rules": {
+    "users": {
+      "$userId": {
+        ".read": "request.auth != null && request.auth.uid == $userId",
+        ".write": "request.auth != null && request.auth.uid == $userId"
+      }
+    },
+    "userPolicies": {
+      "$policyId": {
+        ".read": "request.auth != null && resource.data.userId == request.auth.uid",
+        ".write": "request.auth != null && request.resource.data.userId == request.auth.uid"
+      }
+    }
+  }
+}
